@@ -1,0 +1,42 @@
+# Alexander Fielding
+# Project EE 381 3-1
+
+import random
+import numpy as np
+import pylab as plt
+
+def diceroll():
+    die = random.randint(1,6)
+    return die
+
+    
+#Main
+X = []
+count = 0
+countb = 0
+
+while( countb < 10000):
+    countb +=1
+    success = 0
+    while(count < 1000):
+        count +=1
+        alist = []
+        i = 0
+        while(i < 3):
+            i+=1
+            nxt = diceroll()
+            if nxt != 6:
+                i = 3
+            else:
+                alist.append(nxt)
+                if len(alist) == 3:
+                    success +=1
+                    
+        X.append(success)
+        
+num_bins = 50
+counts, bins = np.histogram(X, bins=num_bins)
+bins = bins[:-1] + (bins[1] - bins[0])/2
+probs = counts/float(counts.sum())
+plt.bar(bins, probs, 1.0/num_bins)
+plt.show()
